@@ -1,0 +1,8 @@
+---
+- name: Deploy new version...
+  git:
+    repo: "https://github.com/pangshuai0301/web_app.git"
+    accept_hostkey: yes
+    dest: /home/ec2-user/web_app
+    version: master
+    force: yes

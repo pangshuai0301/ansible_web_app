@@ -1,0 +1,5 @@
+---
+- hosts: webservers-v0.1
+  remote_user: ec2-user
+  roles:
+    - { role: git }

@@ -12,7 +12,7 @@
     name: gunicorn
   register: gunicorn_installed
 
-- name: create gunicorn template
+- name: create gunicorn template...
   when: gunicorn_installed|success
   template:
     src: gunicorn.conf.j2
@@ -21,6 +21,6 @@
     - Start Gunicorn
 
 - name: start gunicorn...
-  command: "{{ remote_project_dir }}/venv/bin/gunicorn -c {{ remote_project_dir }}/gunicorn.conf manage:app -D -t 6000 --access-logfile log/access.log --error-logfile log/error.log --log-level debug "
+  command: "{{ remote_project_dir }}/venv/bin/gunicorn -c {{ remote_project_dir }}/gunicorn.conf manage:app -D -t 6000 --access-logfile log/access.log --error-logfile log/error.log --log-level debug --reload"
   args:
     chdir: "{{ remote_project_dir }}"
