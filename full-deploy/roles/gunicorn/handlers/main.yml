@@ -1,0 +1,5 @@
+---
+- name: Start Gunicorn
+  command: "{{ remote_project_dir }}/venv/bin/gunicorn -c {{ remote_project_dir }}/gunicorn.conf manage:app -D -t 6000 --access-logfile log/access.log --error-logfile log/error.log --log-level debug "
+  args:
+    chdir: "{{ remote_project_dir }}"

@@ -1,0 +1,20 @@
+---
+- hosts: webservers
+  tasks:
+    - name: install git
+      become: yes
+      become_method: sudo
+      become_user: root
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - git
+- hosts: webservers
+  tasks:
+    - name: Deploy
+      git: 
+        repo: "https://github.com/pangshuai0301/web_app.git" 
+        version: master
+        accept_hostkey: yes
+        dest: /home/ec2-user/web_app

@@ -1,0 +1,4 @@
+---
+remote_project_dir: /home/ec2-user/web_app
+remote_project_env: /home/ec2-user/web_app/venv
+remote_project_gunicorn: /home/ec2-user/web_app/gunicorn.conf

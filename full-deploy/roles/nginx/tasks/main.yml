@@ -1,0 +1,39 @@
+---
+#- name: Install nginx package...
+#  become: yes
+#  become_method: sudo
+#  become_user: root
+#  yum:
+#    name: nginx1.12
+#    state: present
+#  register: nginx_installed
+
+- name: Install nginx packge...
+  become: yes
+  become_method: sudo
+  become_user: root
+  command: "sudo amazon-linux-extras install nginx1.12"
+  register: nginx_installed
+
+- name: Start nginx
+  become: yes
+  become_method: sudo
+  become_user: root
+  when: nginx_installed|success
+  service:
+    name: nginx
+    state: started
+
+- name: Copy nginx.conf.j2 template
+  become: yes
+  become_method: sudo
+  become_user: root
+  template:
+    src: devops_demo.conf.j2
+    dest: /etc/nginx/conf.d/devops_demo.conf 
+    owner: root
+    group: root
+    backup: yes
+    mode: 0644
+  notify:
+      - Restart nginx service

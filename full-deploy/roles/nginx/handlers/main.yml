@@ -1,0 +1,8 @@
+---
+- name: Restart nginx service
+  become: yes
+  become_method: sudo
+  become_user: root
+  service:
+    name: nginx
+    state: restarted

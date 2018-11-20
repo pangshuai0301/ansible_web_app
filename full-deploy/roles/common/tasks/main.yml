@@ -1,0 +1,41 @@
+---
+- name: install pip virtualenv flask...
+  become: yes
+  become_method: sudo
+  become_user: root
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python-pip
+    - python-virtualenv
+    - git
+
+- name: Deploy
+  git:
+    repo: "https://github.com/pangshuai0301/web_app.git"
+    version: master
+    accept_hostkey: yes
+    dest: /home/ec2-user/web_app
+
+- name: upgrede pip and setuptools...
+  pip:
+    chdir: "{{ remote_project_dir }}"
+    virtualenv: "{{ remote_project_env }}"
+    virtualenv_command: virtualenv
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - pip
+    - setuptools
+
+- name: install requiremnts packets...
+  pip:
+    chdir: "{{ remote_project_dir }}"
+    virtualenv: "{{ remote_project_env }}"
+    virtualenv_command: virtualenv
+    requirements: "{{ remote_project_dir }}/requirements.txt"
+    state: present
+
+- name: make log dir
+  command: "mkdir {{ remote_project_dir }}/log/nginx -p"

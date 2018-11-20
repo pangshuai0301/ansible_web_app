@@ -1,0 +1,26 @@
+---
+- name: setup config.py...
+  template:
+    src: config.py
+    dest: "{{ remote_project_dir }}/config.py"
+
+- name: install gunicorn...
+  pip:
+    chdir: "{{ remote_project_dir }}"
+    virtualenv: "{{ remote_project_env }}"
+    virtualenv_command: virtualenv
+    name: gunicorn
+  register: gunicorn_installed
+
+- name: create gunicorn template
+  when: gunicorn_installed|success
+  template:
+    src: gunicorn.conf.j2
+    dest: "{{ remote_project_gunicorn }}"
+  notify:
+    - Start Gunicorn
+
+- name: start gunicorn...
+  command: "{{ remote_project_dir }}/venv/bin/gunicorn -c {{ remote_project_dir }}/gunicorn.conf manage:app -D -t 6000 --access-logfile log/access.log --error-logfile log/error.log --log-level debug "
+  args:
+    chdir: "{{ remote_project_dir }}"
