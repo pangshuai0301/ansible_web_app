@@ -1,2 +1,5 @@
-[webservers]
+[webservers-v0.1]
 ps-strive-web-app-02.aws
+
+[webservers-v0.2]
+ps-strive-web-app-03.aws

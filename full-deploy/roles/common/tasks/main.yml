@@ -17,6 +17,7 @@
     version: master
     accept_hostkey: yes
     dest: /home/ec2-user/web_app
+    version: "v0.2"
 
 - name: upgrede pip and setuptools...
   pip:
